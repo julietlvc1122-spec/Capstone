@@ -57,6 +57,7 @@ app.post("/api/users", async (req, res) => {
     res.status(500).json({ error: "Unable to create user." });
   }
 });
+// user should see Their own favorites if they have favorite posts and they are authenticated
 app.get("/api/favorites", requireAuth, async (req, res) => {
   try {
     const userId = req.user.id;
