@@ -1,6 +1,4 @@
 import express from "express";
-import db from "./client.js";
-import bcrypt from "bcrypt";
 import {
   getProjects,
   getOneProject,
@@ -8,6 +6,9 @@ import {
   getUserByEmail,
   addFavorite,
 } from "./queries.js";
+import jwt from "jsonwebtoken";
+import bcrypt from "bcrypt";
+import { requireAuth } from "./Authenticate.js";
 
 const app = express();
 
@@ -54,10 +55,23 @@ app.post("/api/users", async (req, res) => {
     res.status(500).json({ error: "Unable to create user." });
   }
 });
-app.post("/api/favorites", async (req, res) => {
-  const { userId, projectId } = req.body;
-  const favorite = await addFavorite(userId, projectId);
-  res.status(201).json(favorite);
+app.post("/api/favorites", requireAuth, async (req, res) => {
+  const userId = req.user.id;
+  const { projectId } = req.body;
+  if (!projectId || !NumberIsInteger(projectId)) {
+    return res.status(400).json({
+      erro: "A valid projectID is requried.",
+    });
+  }
+  try {
+    const favorite = await addFavorite(userId, projectId);
+    return res.status(201).json(favorite);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      error: "Unable to add favorite.",
+    });
+  }
 });
 app.post("/api/login", async (req, res) => {
   const { email, password } = req.body ?? {};
@@ -80,10 +94,16 @@ app.post("/api/login", async (req, res) => {
       });
     }
     const { id, username, email: userEmail } = user;
+    const token = jwt.sign(
+      { id: user.id, username: user.username },
+      process.env.JWT_SECRET,
+      { expiresIn: "1h" },
+    );
     return res.status(200).json({
       id,
       username,
       email: userEmail,
+      token,
     });
   } catch (error) {
     console.error(error);
@@ -91,5 +111,8 @@ app.post("/api/login", async (req, res) => {
       error: "Unable to log in.",
     });
   }
+});
+app.get("/api/me", requireAuth, (req, res) => {
+  res.json({ user: req.user });
 });
 export default app;
