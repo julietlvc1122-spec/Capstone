@@ -39,7 +39,7 @@ CREATE TABLE tools(
     name TEXT NOT NULL UNIQUE,
 )
 CREATE TABLE project_tools(
-    project_id INTEGER REFERENCES projects(id)
-    tool_id INTEGER REFERENCES tools(id)
+    project_id INTEGER REFERENCES projects(id),
+    tool_id INTEGER REFERENCES tools(id),
     PRIMARY KEY(project_id, tool_id)
 )
