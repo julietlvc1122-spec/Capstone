@@ -5,6 +5,8 @@ import {
   createUser,
   getUserByEmail,
   addFavorite,
+  deleteFavorite,
+  getFavorites,
 } from "./queries.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
@@ -55,21 +57,65 @@ app.post("/api/users", async (req, res) => {
     res.status(500).json({ error: "Unable to create user." });
   }
 });
+app.get("/api/favorites", requireAuth, async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const favorites = await getFavorites(userId);
+    return res.status(200).json(favorites);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      error: "There are no favorites to retrive",
+    });
+  }
+});
 app.post("/api/favorites", requireAuth, async (req, res) => {
   const userId = req.user.id;
   const { projectId } = req.body;
-  if (!projectId || !NumberIsInteger(projectId)) {
+  if (!projectId || !Number.isInteger(projectId)) {
     return res.status(400).json({
-      erro: "A valid projectID is requried.",
+      error: "A valid projectID is requried.",
     });
   }
   try {
     const favorite = await addFavorite(userId, projectId);
     return res.status(201).json(favorite);
   } catch (error) {
+    if (error.code === "23505") {
+      return res.status(409).json({
+        error: "You have already favorited this project.",
+      });
+    }
     console.error(error);
     return res.status(500).json({
       error: "Unable to add favorite.",
+    });
+  }
+});
+
+app.delete("/api/favorites/:projectId", requireAuth, async (req, res) => {
+  const userId = req.user.id;
+  const projectId = Number(req.params.projectId);
+  if (!Number.isInteger(projectId) || projectId <= 0) {
+    return res.status(400).json({
+      error: "A valid project ID is required.",
+    });
+  }
+  try {
+    const favorite = await deleteFavorite(userId, projectId);
+    if (!favorite) {
+      return res.status(404).json({
+        error: "Favorite not found.",
+      });
+    }
+    return res.status(200).json({
+      message: "Favorite removed successfully.",
+      favorite,
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      error: "Unable to remove favorite.",
     });
   }
 });

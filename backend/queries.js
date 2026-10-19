@@ -45,6 +45,20 @@ export async function addFavorite(user_id, project_id) {
   const { rows } = await db.query(SQL, [user_id, project_id]);
   return rows[0];
 }
+export async function deleteFavorite(user_id, project_id) {
+  const SQL = `DELETE FROM favorites
+      WHERE user_id = $1 AND project_id = $2
+      RETURNING *;`;
+  const { rows } = await db.query(SQL, [user_id, project_id]);
+  return rows[0];
+}
+export async function getFavorites(user_id) {
+  const SQL = `SELECT projects.* FROM favorites 
+  JOIN projects ON favorites.project_id = projects.id
+   WHERE favorites.user_id=$1;`;
+  const { rows } = await db.query(SQL, [user_id]);
+  return rows;
+}
 export async function getUserByEmail(email) {
   const SQL = ` SELECT * FROM users WHERE email = $1`;
   const { rows } = await db.query(SQL, [email]);
