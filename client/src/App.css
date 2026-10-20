@@ -1,0 +1,262 @@
+/* ===== COLOR PALETTE ===== */
+:root {
+  --navy: #23364d;
+  --orange: #c56b3d;
+  --white: #ffffff;
+  --tan: #d9c3a5;
+  --light-tan: #f5eee5;
+  --text: #263342;
+  --muted: #6b7280;
+}
+
+/* ===== GENERAL PAGE STYLING ===== */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background-color: var(--white);
+  color: var(--text);
+  font-family: "Nunito Sans", sans-serif;
+}
+
+button,
+a {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.app {
+  min-height: 100vh;
+  background: var(--white);
+}
+
+/* ===== TOP NAVIGATION ===== */
+.top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 18px 5%;
+  background: var(--white);
+  border-bottom: 1px solid #e8e8e8;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.logo {
+  color: var(--navy);
+  font-family: "Lora", serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+.icon-button {
+  border: none;
+  background: transparent;
+  color: var(--navy);
+  font-size: 1.8rem;
+  padding: 5px 10px;
+  border-radius: 8px;
+}
+
+.icon-button:hover {
+  background: var(--light-tan);
+}
+
+.account-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border: 1px solid var(--navy);
+  border-radius: 25px;
+  color: var(--navy);
+  font-weight: 700;
+  transition: 0.2s ease;
+}
+
+.account-link:hover {
+  background: var(--navy);
+  color: var(--white);
+}
+
+/* ===== SLIDE-OUT MENU ===== */
+.side-menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 290px;
+  max-width: 85vw;
+  height: 100vh;
+  padding: 28px 22px;
+  background: var(--navy);
+  color: var(--white);
+  box-shadow: 8px 0 30px rgb(0 0 0 / 15%);
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 10px;
+  overflow-y: auto;
+  transform: translateX(-100%);
+  visibility: hidden;
+  transition:
+    transform 0.3s ease,
+    visibility 0s linear 0.3s;
+}
+
+.side-menu h2 {
+  font-family: "Lora", serif;
+  font-size: 1.5rem;
+  margin: 24px 0 16px;
+}
+.side-menu.open {
+  transform: translateX(0);
+  visibility: visible;
+  transition:
+    transform 0.3s ease,
+    visibility 0s;
+}
+
+.close-button {
+  align-self: flex-end;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--white);
+}
+
+.close-button:hover {
+  background: rgb(255 255 255 / 12%);
+}
+
+.side-menu > button:not(.close-button) {
+  padding: 13px 14px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--white);
+  text-align: left;
+  font-size: 1rem;
+}
+
+.side-menu > button:not(.close-button):hover {
+  background: var(--orange);
+}
+
+/* ===== WELCOME SECTION ===== */
+.main-content {
+  width: min(1200px, 90%);
+  margin: 0 auto;
+  padding: 45px 0 70px;
+}
+
+.welcome {
+  padding: 55px 45px;
+  border-radius: 18px;
+  background: var(--light-tan);
+  border-left: 6px solid var(--orange);
+  margin-bottom: 45px;
+}
+
+.eyebrow {
+  color: var(--orange);
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 2px;
+  margin-bottom: 14px;
+}
+
+.welcome h1 {
+  color: var(--navy);
+  font-family: "Lora", serif;
+  font-size: clamp(2rem, 5vw, 3.4rem);
+  line-height: 1.15;
+  margin: 0 0 16px;
+}
+
+.welcome > p:last-child {
+  color: var(--muted);
+  font-size: 1.1rem;
+  line-height: 1.7;
+  margin-bottom: 0;
+}
+
+/* ===== PROJECT SECTION ===== */
+.projects-section h2 {
+  color: var(--navy);
+  font-family: "Lora", serif;
+  font-size: 2rem;
+  margin-bottom: 8px;
+}
+
+.projects-section > p {
+  color: var(--muted);
+  margin-top: 0;
+  margin-bottom: 28px;
+}
+
+.project-feed {
+  min-height: 180px;
+  padding: 30px;
+  border: 2px dashed var(--tan);
+  border-radius: 14px;
+  background: var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.empty-message {
+  color: var(--muted);
+  text-align: center;
+  line-height: 1.6;
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+@media (max-width: 600px) {
+  .top-bar {
+    padding: 14px 4%;
+    gap: 10px;
+  }
+
+  .logo {
+    font-size: 1.15rem;
+  }
+
+  .account-link {
+    padding: 8px 10px;
+    font-size: 0.9rem;
+  }
+
+  .main-content {
+    width: 92%;
+    padding-top: 25px;
+  }
+
+  .welcome {
+    padding: 32px 22px;
+    margin-bottom: 32px;
+  }
+
+  .welcome h1 {
+    font-size: 2.1rem;
+  }
+
+  .projects-section h2 {
+    font-size: 1.65rem;
+  }
+}
