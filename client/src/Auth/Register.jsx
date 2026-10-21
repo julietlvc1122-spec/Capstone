@@ -2,10 +2,13 @@ import { useState } from "react";
 import { useAuth } from "./AuthContext";
 import { Link, useNavigate } from "react-router";
 import "./register.css";
+import { Eye, EyeOff } from "lucide-react";
 
 /** A form that allows users to register for a new account */
 export default function Register() {
   const { register } = useAuth();
+  const [showPassword, setShowPassword] = useState(false);
+  const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const [error, setError] = useState(null);
 
@@ -57,16 +60,31 @@ export default function Register() {
           </label>
           <label>
             Password
-            <input
-              type="password"
-              name="password"
-              required
-              placeholder="Enter your password"
-            />
+            <div className="password-container">
+              <input
+                type={showPassword ? "text" : "password"}
+                name="password"
+                required
+                placeholder="Enter your password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="toggle-password"
+                aria-label={showPassword ? "Hide password" : "Show password"}
+              >
+                {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+              </button>
+            </div>
           </label>
           <button>Register</button>
           {error && <p role="alert">{error}</p>}
-          <Link to="/login"> Already have an account? Log in here.</Link>
+          <Link className="redirect-link" to="/login">
+            Already have an account? Log in here.
+          </Link>
         </form>
       </main>
     </div>

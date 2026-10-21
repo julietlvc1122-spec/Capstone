@@ -68,3 +68,40 @@
   border-radius: 6px;
   cursor: pointer;
 }
+.redirect-link {
+  text-align: center;
+}
+.register-content .toggle-password {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 4px;
+  background: transparent;
+  color: #b8b8b8;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  line-height: 1;
+  transition: color 0.2s ease;
+}
+.password-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.password-container input {
+  box-sizing: border-box;
+  width: 100%;
+  padding-right: 45px;
+}
+.register-content .toggle-password {
+  color: #b8b8b8;
+  transition: color 0.2s ease;
+}
+
+.register-content .toggle-password:hover {
+  color: #555555;
+}
