@@ -37,7 +37,7 @@ app.get("/api/projects/:id", async (req, res) => {
   return res.status(200).send(project);
 });
 // unique contraint 23505 means there is a duplicate username or email
-app.post("/api/users", async (req, res) => {
+app.post("/api/users/register", async (req, res) => {
   const { username, email, password } = req.body ?? {};
   if (!username || !email || !password) {
     return res.status(400).json({
@@ -120,7 +120,7 @@ app.delete("/api/favorites/:projectId", requireAuth, async (req, res) => {
     });
   }
 });
-app.post("/api/login", async (req, res) => {
+app.post("/api/users/login", async (req, res) => {
   const { email, password } = req.body ?? {};
   if (!email || !password) {
     return res.status(400).json({

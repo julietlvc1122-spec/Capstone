@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { useAuth } from "./Auth/AuthContext";
+import { useAuth } from "./AuthContext";
 import { Link, useNavigate } from "react-router";
+import "./register.css";
 
 /** A form that allows users to register for a new account */
 export default function Register() {
@@ -22,25 +23,52 @@ export default function Register() {
   };
 
   return (
-    <>
-      <h1>Register for an account</h1>
-      <form action={tryRegister}>
-        <label>
-          Email
-          <input type="email" name="email" required />
-        </label>
-        <label>
-          Username
-          <input type="text" name="username" required />
-        </label>
-        <label>
-          Password
-          <input type="password" name="password" required />
-        </label>
-        <button>Register</button>
-        {error && <p role="alert">{error}</p>}
-      </form>
-      <Link to="/login"> Already have an account? Log in here.</Link>
-    </>
+    <div className="register-page">
+      <header className="register-header">
+        <Link to="/" className="register-logo">
+          Stumped
+        </Link>
+
+        <Link to="/" className="home-link">
+          Home
+        </Link>
+      </header>
+      <main className="register-content">
+        <h1>Create your account</h1>
+        <p>Join Stumped and find your next woodworking project.</p>
+        <form action={tryRegister}>
+          <label>
+            Email
+            <input
+              type="email"
+              name="email"
+              required
+              placeholder="Enter your email"
+            />
+          </label>
+          <label>
+            Username
+            <input
+              type="text"
+              name="username"
+              required
+              placeholder="Enter your username"
+            />
+          </label>
+          <label>
+            Password
+            <input
+              type="password"
+              name="password"
+              required
+              placeholder="Enter your password"
+            />
+          </label>
+          <button>Register</button>
+          {error && <p role="alert">{error}</p>}
+          <Link to="/login"> Already have an account? Log in here.</Link>
+        </form>
+      </main>
+    </div>
   );
 }

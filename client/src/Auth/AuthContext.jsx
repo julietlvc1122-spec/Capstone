@@ -21,7 +21,7 @@ export function AuthProvider({ children }) {
     });
     const result = await response.json();
     if (!response.ok) {
-      throw Error(result.message);
+      throw Error(result.message || "Something went wrong");
     }
     setToken(result.token);
   };
@@ -34,13 +34,19 @@ export function AuthProvider({ children }) {
     });
     const result = await response.json();
     if (!response.ok) {
-      throw Error(result.message);
+      throw Error(result.message || "Something went wrong");
     }
     console.log("LOGIN RESULT:", result);
     setToken(result.token);
-    setUser(result.user);
+    const loggedInUser = {
+      id: result.id,
+      username: result.username,
+      email: result.email,
+    };
+
+    setUser(loggedInUser);
     localStorage.setItem("token", result.token);
-    localStorage.setItem("user", JSON.stringify(result.user));
+    localStorage.setItem("user", JSON.stringify(loggedInUser));
   };
 
   const logout = () => {

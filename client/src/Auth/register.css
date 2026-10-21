@@ -1,0 +1,70 @@
+.register-page {
+  min-height: 100vh;
+  background-color: white;
+  color: #23364d;
+}
+
+.register-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 32px;
+  background-color: #23364d;
+}
+
+.register-logo {
+  color: white;
+  font-size: 28px;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.home-link {
+  color: #23364d;
+  background-color: white;
+  padding: 10px 16px;
+  border-radius: 8px;
+  text-decoration: none;
+}
+
+.register-content {
+  width: 90%;
+  max-width: 420px;
+  margin: 40px auto;
+}
+
+.register-content h1,
+.register-content > p {
+  text-align: center;
+}
+
+.register-content form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  border: 1px solid #d9c3a5;
+  padding: 20px;
+  border-radius: 6px;
+  background-color: #f7f8fa;
+}
+
+.register-content label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.register-content input {
+  padding: 12px;
+  border: 1px solid #d9c3a5;
+  border-radius: 6px;
+}
+
+.register-content button {
+  padding: 12px;
+  background-color: #c56b3d;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}

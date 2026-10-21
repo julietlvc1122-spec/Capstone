@@ -52,8 +52,10 @@ export async function deleteFavorite(user_id, project_id) {
   const { rows } = await db.query(SQL, [user_id, project_id]);
   return rows[0];
 }
+// user should be able to see all favorited posts
 export async function getFavorites(user_id) {
-  const SQL = `SELECT projects.* FROM favorites 
+  const SQL = `SELECT projects.* 
+  FROM favorites 
   JOIN projects ON favorites.project_id = projects.id
    WHERE favorites.user_id=$1;`;
   const { rows } = await db.query(SQL, [user_id]);

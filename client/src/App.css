@@ -7,16 +7,17 @@
   --light-tan: #f5eee5;
   --text: #263342;
   --muted: #6b7280;
+  --sidebar-width: min(290px, 85vw);
 }
 
-/* ===== GENERAL PAGE STYLING ===== */
+/* ===== GENERAL STYLING ===== */
 * {
   box-sizing: border-box;
 }
 
 body {
   margin: 0;
-  background-color: var(--white);
+  background: var(--white);
   color: var(--text);
   font-family: "Nunito Sans", sans-serif;
 }
@@ -37,21 +38,23 @@ a {
 
 .app {
   min-height: 100vh;
+  overflow-x: hidden;
   background: var(--white);
 }
 
 /* ===== TOP NAVIGATION ===== */
 .top-bar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 20px;
   padding: 18px 5%;
-  background: var(--white);
   border-bottom: 1px solid #e8e8e8;
-  position: sticky;
-  top: 0;
-  z-index: 10;
+  background: var(--white);
+  transition: transform 0.3s ease;
 }
 
 .logo {
@@ -60,15 +63,16 @@ a {
   font-size: 1.5rem;
   font-weight: 700;
   letter-spacing: -0.5px;
+  white-space: nowrap;
 }
 
 .icon-button {
+  padding: 5px 10px;
   border: none;
+  border-radius: 8px;
   background: transparent;
   color: var(--navy);
   font-size: 1.8rem;
-  padding: 5px 10px;
-  border-radius: 8px;
 }
 
 .icon-button:hover {
@@ -77,6 +81,7 @@ a {
 
 .account-link {
   display: inline-flex;
+  flex-shrink: 0;
   align-items: center;
   gap: 8px;
   padding: 10px 16px;
@@ -84,7 +89,9 @@ a {
   border-radius: 25px;
   color: var(--navy);
   font-weight: 700;
-  transition: 0.2s ease;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
 }
 
 .account-link:hover {
@@ -92,24 +99,23 @@ a {
   color: var(--white);
 }
 
-/* ===== SLIDE-OUT MENU ===== */
+/* ===== SLIDE-OUT SIDEBAR ===== */
 .side-menu {
   position: fixed;
   top: 0;
   left: 0;
-  width: 290px;
-  max-width: 85vw;
-  height: 100vh;
-  padding: 28px 22px;
-  background: var(--navy);
-  color: var(--white);
-  box-shadow: 8px 0 30px rgb(0 0 0 / 15%);
   z-index: 20;
   display: flex;
   flex-direction: column;
   align-items: stretch;
   gap: 10px;
+  width: var(--sidebar-width);
+  height: 100vh;
+  padding: 28px 22px;
   overflow-y: auto;
+  background: var(--navy);
+  color: var(--white);
+  box-shadow: 8px 0 30px rgb(0 0 0 / 15%);
   transform: translateX(-100%);
   visibility: hidden;
   transition:
@@ -117,17 +123,18 @@ a {
     visibility 0s linear 0.3s;
 }
 
-.side-menu h2 {
-  font-family: "Lora", serif;
-  font-size: 1.5rem;
-  margin: 24px 0 16px;
-}
 .side-menu.open {
   transform: translateX(0);
   visibility: visible;
   transition:
     transform 0.3s ease,
     visibility 0s;
+}
+
+.side-menu h2 {
+  margin: 24px 0 16px;
+  font-family: "Lora", serif;
+  font-size: 1.5rem;
 }
 
 .close-button {
@@ -157,67 +164,100 @@ a {
   background: var(--orange);
 }
 
-/* ===== WELCOME SECTION ===== */
+/* ===== PUSH PAGE ASIDE ===== */
+.app.menu-open .top-bar {
+  width: calc(100% - var(--sidebar-width));
+  transform: translateX(var(--sidebar-width));
+}
+
+/* ===== MAIN CONTENT ===== */
 .main-content {
   width: min(1200px, 90%);
   margin: 0 auto;
   padding: 45px 0 70px;
+  transition:
+    width 0.3s ease,
+    margin 0.3s ease;
 }
 
+.app.menu-open .main-content {
+  width: calc(95% - var(--sidebar-width));
+  margin-right: 2.5%;
+  margin-left: calc(var(--sidebar-width) + 2.5%);
+}
+
+/* ===== WELCOME SECTION ===== */
 .welcome {
+  width: 100%;
+  min-width: 0;
+  margin-bottom: 45px;
   padding: 55px 45px;
+  border-left: 6px solid var(--orange);
   border-radius: 18px;
   background: var(--light-tan);
-  border-left: 6px solid var(--orange);
-  margin-bottom: 45px;
+  overflow-wrap: break-word;
+}
+
+.app.menu-open .welcome {
+  padding: 35px 25px;
 }
 
 .eyebrow {
-  color: var(--orange);
+  margin-bottom: 14px;
+  color: var(--navy);
   font-size: 0.8rem;
   font-weight: 800;
   letter-spacing: 2px;
-  margin-bottom: 14px;
 }
 
 .welcome h1 {
+  margin: 0 0 16px;
   color: var(--navy);
   font-family: "Lora", serif;
   font-size: clamp(2rem, 5vw, 3.4rem);
   line-height: 1.15;
-  margin: 0 0 16px;
+}
+
+.app.menu-open .welcome h1 {
+  font-size: clamp(1.5rem, 3vw, 2.5rem);
 }
 
 .welcome > p:last-child {
+  margin-bottom: 0;
   color: var(--muted);
   font-size: 1.1rem;
   line-height: 1.7;
-  margin-bottom: 0;
 }
 
 /* ===== PROJECT SECTION ===== */
 .projects-section h2 {
+  margin-bottom: 8px;
   color: var(--navy);
   font-family: "Lora", serif;
   font-size: 2rem;
-  margin-bottom: 8px;
 }
 
 .projects-section > p {
-  color: var(--muted);
   margin-top: 0;
   margin-bottom: 28px;
+  color: var(--muted);
 }
 
 .project-feed {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-width: 0;
   min-height: 180px;
   padding: 30px;
   border: 2px dashed var(--tan);
   border-radius: 14px;
   background: var(--white);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+}
+
+.app.menu-open .project-feed {
+  padding: 20px;
 }
 
 .empty-message {
@@ -229,17 +269,18 @@ a {
 /* ===== RESPONSIVE DESIGN ===== */
 @media (max-width: 600px) {
   .top-bar {
-    padding: 14px 4%;
     gap: 10px;
+    padding: 14px 4%;
   }
 
   .logo {
-    font-size: 1.15rem;
+    font-size: 2rem;
   }
 
   .account-link {
-    padding: 8px 10px;
-    font-size: 0.9rem;
+    gap: 5px;
+    padding: 8px;
+    font-size: 0.85rem;
   }
 
   .main-content {
@@ -247,9 +288,19 @@ a {
     padding-top: 25px;
   }
 
+  .app.menu-open .main-content {
+    width: calc(95% - var(--sidebar-width));
+    margin-left: calc(var(--sidebar-width) + 2.5%);
+    margin-right: 2.5%;
+  }
+
   .welcome {
     padding: 32px 22px;
     margin-bottom: 32px;
+  }
+
+  .app.menu-open .welcome {
+    padding: 24px 16px;
   }
 
   .welcome h1 {
