@@ -4,26 +4,10 @@
   color: #23364d;
 }
 
-.register-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px 32px;
-  background-color: #23364d;
-}
-
 .register-logo {
   color: white;
   font-size: 28px;
   font-weight: bold;
-  text-decoration: none;
-}
-
-.home-link {
-  color: #23364d;
-  background-color: white;
-  padding: 10px 16px;
-  border-radius: 8px;
   text-decoration: none;
 }
 

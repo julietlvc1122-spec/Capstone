@@ -27,15 +27,6 @@ export default function Register() {
 
   return (
     <div className="register-page">
-      <header className="register-header">
-        <Link to="/" className="register-logo">
-          Stumped
-        </Link>
-
-        <Link to="/" className="home-link">
-          Home
-        </Link>
-      </header>
       <main className="register-content">
         <h1>Create your account</h1>
         <p>Join Stumped and find your next woodworking project.</p>
