@@ -47,7 +47,7 @@ async function seed() {
    INSERT INTO projects (title, description, difficulty, instructions, image_url, creator_id, category_id)
     VALUES ('Wooden Picture Frame', 'A simple wooden frame for your favorite photo', 'Beginner',
     '1. Measure your photo. 2. Cut four pieces of wood. 3. Join the corners. 4. Sand and finish the frame.',
-      NULL,
+      'https://images.pexels.com/photos/8059662/pexels-photo-8059662.jpeg',
       NULL,
       (SELECT id FROM categories WHERE name = 'Home decor')
     ),
@@ -56,7 +56,7 @@ async function seed() {
       'A charming birdhouse for your garden or backyard.',
       'Beginner',
       '1. Cut the wooden panels. 2. Drill an entrance hole. 3. Assemble the panels. 4. Attach the roof.',
-      NULL,
+      'https://images.pexels.com/photos/14118082/pexels-photo-14118082.jpeg',
       NULL,
       (SELECT id FROM categories WHERE name = 'Garden and plants')
     ),
@@ -65,7 +65,7 @@ async function seed() {
       'A compact organizer for pens, notebooks, and other desk supplies.',
       'Beginner',
       '1. Measure and cut the base and dividers. 2. Sand the edges. 3. Glue the pieces together. 4. Apply a finish.',
-      NULL,
+      'https://images.pexels.com/photos/2587993/pexels-photo-2587993.jpeg',
       NULL,
       (SELECT id FROM categories WHERE name = 'Storage and Organization')
     ),
@@ -74,7 +74,7 @@ async function seed() {
       'A practical serving tray with handles for carrying drinks and snacks.',
       'Intermediate',
       '1. Cut the base and sides. 2. Sand all pieces. 3. Attach the sides and handles. 4. Apply a food-safe finish.',
-      NULL,
+      'https://images.pexels.com/photos/34504840/pexels-photo-34504840.jpeg',
       NULL,
       (SELECT id FROM categories WHERE name = 'Kitchen and Dining')
     ),
@@ -83,7 +83,7 @@ async function seed() {
       'A compact table for a bedroom, living room, or reading corner.',
       'Intermediate',
       '1. Cut the tabletop and legs. 2. Assemble the legs and supports. 3. Attach the tabletop. 4. Sand and finish.',
-      NULL,
+      'https://images.pexels.com/photos/6266186/pexels-photo-6266186.jpeg',
       NULL,
       (SELECT id FROM categories WHERE name = 'Small Furniture')
     );

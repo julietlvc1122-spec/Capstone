@@ -1,12 +1,27 @@
-import { useState } from "react";
 import { Routes, Route, Link } from "react-router";
 import Register from "./Auth/Register.jsx";
 import Login from "./Auth/login.jsx";
 import "./App.css";
+import { useState, useEffect } from "react";
+import ProjectDetails from "./Details.jsx";
 
 export default function App() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [projects, setProjects] = useState([]);
 
+  useEffect(() => {
+    async function fetchProjects() {
+      try {
+        const response = await fetch(`${import.meta.env.VITE_API}/projects`);
+        const data = await response.json();
+        setProjects(data);
+      } catch (error) {
+        console.error("Error fetching projects:", error);
+      }
+    }
+
+    fetchProjects();
+  }, []);
   return (
     <Routes>
       <Route
@@ -67,18 +82,29 @@ export default function App() {
               <section className="projects-section">
                 <h2>Explore projects</h2>
                 <p>Discover your next weekend creation.</p>
-
-                <div className="project-feed">
-                  <p className="empty-message">
-                    Your woodworking inspiration will appear here!
-                  </p>
-                </div>
               </section>
+              <div className="project-feed">
+                {projects.map((project) => (
+                  <Link
+                    to={`/projects/${project.id}`}
+                    className="project-card"
+                    key={project.id}
+                  >
+                    {project.image_url && (
+                      <img src={project.image_url} alt={project.title} />
+                    )}
+
+                    <h3>{project.title}</h3>
+                    <p>{project.description}</p>
+                    <p>Difficulty: {project.difficulty}</p>
+                  </Link>
+                ))}
+              </div>
             </main>
           </div>
         }
       />
-
+      <Route path="/projects/:id" element={<ProjectDetails />} />
       <Route path="/register" element={<Register />} />
       <Route path="/login" element={<Login />} />
     </Routes>
