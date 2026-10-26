@@ -3,29 +3,63 @@ import bcrypt from "bcrypt";
 // can select difficulty & category of projects presented to you
 // if both are selected in either order then the db must find projects that match
 export async function getProjects(difficulty, category) {
-  let SQL = `SELECT projects.* 
+  let SQL = `SELECT projects.* ,categories.name AS category_name
   FROM projects 
   JOIN categories 
   ON projects.category_id = categories.id`;
   const conditions = [];
   const params = [];
+
   if (difficulty) {
-    SQL += ` WHERE difficulty = $1`;
     params.push(difficulty);
+    conditions.push(`projects.difficulty = $${params.length}`);
   }
   if (category) {
     params.push(category);
     conditions.push(`categories.name = $${params.length}`);
   }
   if (conditions.length > 0) {
-    SQL += `WHERE ${conditions.join("AND")}`;
+    SQL += ` WHERE ${conditions.join("AND")}`;
   }
   const { rows } = await db.query(SQL, params);
   return rows;
 }
 // getting one project
 export async function getOneProject(id) {
-  const SQL = `SELECT * FROM projects WHERE id =$1`;
+  const SQL = `SELECT
+      projects.*,
+
+      (
+        SELECT json_agg(
+          json_build_object(
+            'id', materials.id,
+            'name', materials.name,
+            'quantity', project_materials.quantity
+          )
+        )
+        FROM project_materials
+        JOIN materials
+        ON project_materials.material_id = materials.id
+        WHERE project_materials.project_id = projects.id
+      ) AS materials,
+
+      (
+        SELECT json_agg(
+          json_build_object(
+            'id', tools.id,
+            'name', tools.name
+          )
+        )
+        FROM project_tools
+        JOIN tools
+        ON project_tools.tool_id = tools.id
+        WHERE project_tools.project_id = projects.id
+      ) AS tools
+
+    FROM projects
+    WHERE projects.id = $1
+  `;
+
   const { rows } = await db.query(SQL, [id]);
   return rows[0];
 }

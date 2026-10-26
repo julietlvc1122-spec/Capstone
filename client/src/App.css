@@ -1,4 +1,7 @@
-/* ===== COLOR PALETTE ===== */
+/* =================================
+   COLOR PALETTE
+================================= */
+
 :root {
   --navy: #23364d;
   --orange: #c56b3d;
@@ -10,7 +13,10 @@
   --sidebar-width: min(290px, 85vw);
 }
 
-/* ===== GENERAL STYLING ===== */
+/* =================================
+   GENERAL STYLING
+================================= */
+
 * {
   box-sizing: border-box;
 }
@@ -38,15 +44,19 @@ a {
 
 .app {
   min-height: 100vh;
-  overflow-x: hidden;
+
   background: var(--white);
 }
 
-/* ===== TOP NAVIGATION ===== */
+/* =================================
+   TOP NAVIGATION
+================================= */
+
 .top-bar {
   position: sticky;
   top: 0;
-  z-index: 10;
+
+  z-index: 1000;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -57,18 +67,33 @@ a {
   transition: transform 0.3s ease;
 }
 
+/* Logo */
+
 .logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
   color: var(--white);
-  font-family: "Lora", serif;
-  font-size: 1.5rem;
+  text-decoration: none;
+  font-family: "IM Fell English SC", serif;
+  font-size: 3rem;
   font-weight: 700;
   letter-spacing: -0.5px;
   white-space: nowrap;
+  margin: 0;
 }
+
+.logo-icon {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+}
+
+/* Hamburger button */
 
 .icon-button {
   padding: 5px 10px;
-  border: 1px solid white;
+  border: 1px solid var(--white);
   border-radius: 8px;
   background: transparent;
   color: var(--white);
@@ -78,6 +103,8 @@ a {
 .icon-button:hover {
   background: var(--orange);
 }
+
+/* Account and Home links */
 
 .account-link {
   display: inline-flex;
@@ -99,7 +126,10 @@ a {
   color: var(--white);
 }
 
-/* ===== SLIDE-OUT SIDEBAR ===== */
+/* =================================
+   SLIDE-OUT SIDEBAR
+================================= */
+
 .side-menu {
   position: fixed;
   top: 0;
@@ -123,6 +153,8 @@ a {
     visibility 0s linear 0.3s;
 }
 
+/* Sidebar open */
+
 .side-menu.open {
   transform: translateX(0);
   visibility: visible;
@@ -131,11 +163,15 @@ a {
     visibility 0s;
 }
 
+/* Sidebar heading */
+
 .side-menu h2 {
   margin: 24px 0 16px;
   font-family: "Lora", serif;
   font-size: 1.5rem;
 }
+
+/* Close button */
 
 .close-button {
   align-self: flex-end;
@@ -150,6 +186,26 @@ a {
   background: rgb(255 255 255 / 12%);
 }
 
+/* Sidebar category links */
+
+.side-menu a {
+  display: flex;
+  align-items: center;
+  gap: 18px; /* Space between icon and category name */
+  padding: 12px 14px;
+  color: var(--white);
+  text-decoration: none;
+  border-radius: 8px;
+  transition: color 0.2s ease;
+}
+/* Category links turn orange when hovered */
+
+.side-menu a:hover {
+  color: var(--orange);
+}
+
+/* Sidebar buttons */
+
 .side-menu > button:not(.close-button) {
   padding: 13px 14px;
   border: none;
@@ -160,17 +216,61 @@ a {
   font-size: 1rem;
 }
 
+/* Sidebar buttons hover */
+
 .side-menu > button:not(.close-button):hover {
   background: var(--orange);
 }
 
-/* ===== PUSH PAGE ASIDE ===== */
+/* =================================
+   WELCOME MESSAGE
+================================= */
+
+.welcome-message {
+  color: var(--orange);
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+/* =================================
+   LOGOUT BUTTON
+================================= */
+
+.logout-button {
+  display: flex;
+  align-items: center;
+  background: transparent;
+  border: none;
+  color: var(--white);
+  font-size: 1rem;
+  text-align: left;
+  cursor: pointer;
+  padding: 12px 16px;
+  transition: color 0.2s ease;
+  gap: 18px;
+}
+
+/* Logout text turns orange */
+
+.logout-button:hover {
+  color: var(--orange);
+  background: transparent;
+}
+
+/* =================================
+   PUSH PAGE ASIDE
+================================= */
+
 .app.menu-open .top-bar {
   width: calc(100% - var(--sidebar-width));
   transform: translateX(var(--sidebar-width));
 }
 
-/* ===== MAIN CONTENT ===== */
+/* =================================
+   MAIN CONTENT
+================================= */
+
 .main-content {
   width: min(1200px, 90%);
   margin: 0 auto;
@@ -180,13 +280,18 @@ a {
     margin 0.3s ease;
 }
 
+/* Main content moves when sidebar opens */
+
 .app.menu-open .main-content {
   width: calc(95% - var(--sidebar-width));
   margin-right: 2.5%;
   margin-left: calc(var(--sidebar-width) + 2.5%);
 }
 
-/* ===== WELCOME SECTION ===== */
+/* =================================
+   WELCOME SECTION
+================================= */
+
 .welcome {
   width: 100%;
   min-width: 0;
@@ -198,9 +303,13 @@ a {
   overflow-wrap: break-word;
 }
 
+/* Welcome section when sidebar opens */
+
 .app.menu-open .welcome {
   padding: 35px 25px;
 }
+
+/* Welcome eyebrow */
 
 .eyebrow {
   margin-bottom: 14px;
@@ -210,17 +319,23 @@ a {
   letter-spacing: 2px;
 }
 
+/* Welcome heading */
+
 .welcome h1 {
   margin: 0 0 16px;
   color: var(--navy);
-  font-family: "Lora", serif;
+  font-family: "IM Fell English SC", serif;
   font-size: clamp(2rem, 5vw, 3.4rem);
   line-height: 1.15;
 }
 
+/* Welcome heading when sidebar opens */
+
 .app.menu-open .welcome h1 {
   font-size: clamp(1.5rem, 3vw, 2.5rem);
 }
+
+/* Welcome description */
 
 .welcome > p:last-child {
   margin-bottom: 0;
@@ -229,11 +344,14 @@ a {
   line-height: 1.7;
 }
 
-/* ===== PROJECT SECTION ===== */
+/* =================================
+   PROJECT SECTION
+================================= */
+
 .projects-section h2 {
   margin-bottom: 8px;
   color: var(--navy);
-  font-family: "Lora", serif;
+  font-family: "IM Fell English SC", serif;
   font-size: 2rem;
 }
 
@@ -242,6 +360,8 @@ a {
   margin-bottom: 28px;
   color: var(--muted);
 }
+
+/* Project feed */
 
 .project-feed {
   display: flex;
@@ -256,112 +376,18 @@ a {
   background: var(--white);
 }
 
+/* Project feed when sidebar opens */
+
 .app.menu-open .project-feed {
   padding: 20px;
 }
+
+/* Empty project message */
 
 .empty-message {
   color: var(--muted);
   text-align: center;
   line-height: 1.6;
-}
-
-/* ===== RESPONSIVE DESIGN ===== */
-@media (max-width: 600px) {
-  .top-bar {
-    gap: 10px;
-    padding: 14px 4%;
-  }
-
-  .logo {
-    font-size: 2rem;
-  }
-
-  .account-link {
-    gap: 5px;
-    padding: 8px;
-    font-size: 0.85rem;
-  }
-
-  .main-content {
-    width: 92%;
-    padding-top: 25px;
-  }
-
-  .app.menu-open .main-content {
-    width: calc(95% - var(--sidebar-width));
-    margin-left: calc(var(--sidebar-width) + 2.5%);
-    margin-right: 2.5%;
-  }
-
-  .welcome {
-    padding: 32px 22px;
-    margin-bottom: 32px;
-  }
-
-  .app.menu-open .welcome {
-    padding: 24px 16px;
-  }
-
-  .welcome h1 {
-    font-size: 2.1rem;
-  }
-
-  .projects-section h2 {
-    font-size: 1.65rem;
-  }
-}
-
-/* PROJECT DETAILS PAGE */
-
-.project-details {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 30px 24px 60px;
-  background-color: white;
-}
-
-/* Back to projects link */
-.project-details > a {
-  display: inline-block;
-  margin-bottom: 24px;
-  color: #23364d;
-  text-decoration: none;
-  font-weight: 600;
-}
-
-.project-details > a:hover {
-  color: #c56b3d;
-}
-
-/* Large project photo */
-.project-details img {
-  width: 100%;
-  max-height: 600px;
-  object-fit: contain;
-  object-position: center;
-  display: block;
-  border-radius: 16px;
-}
-/* Image area */
-.project-details .project-image-container {
-  width: 100%;
-  min-height: 350px;
-  max-height: 600px;
-  background-color: #f7f7f7;
-  border-radius: 16px;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 30px;
-}
-
-.project-details .project-image-container img {
-  width: 100%;
-  height: 100%;
-  max-height: 600px;
-  object-fit: contain;
 }
 
 /* =================================
@@ -372,7 +398,7 @@ a {
   max-width: 1450px;
   margin: 0 auto;
   padding: 30px 24px 60px;
-  background-color: white;
+  background: var(--white);
 }
 
 /* Back link */
@@ -380,17 +406,17 @@ a {
 .back-link {
   display: inline-block;
   margin-bottom: 24px;
-  color: #c56b3d;
+  color: var(--orange);
   text-decoration: none;
   font-weight: 600;
 }
 
 .back-link:hover {
-  color: #23364d;
+  color: var(--navy);
 }
 
 /* =================================
-   TOP SECTION
+   PROJECT HERO
    Photo left, information right
 ================================= */
 
@@ -401,7 +427,9 @@ a {
   align-items: center;
 }
 
-/* Photo container */
+/* =================================
+   PROJECT IMAGE
+================================= */
 
 .project-image-container {
   width: 100%;
@@ -433,13 +461,13 @@ a {
   padding: 10px 0;
 }
 
-/* Orange decorative line */
+/* Orange decorative heading */
 
 .orange-heading-line {
   display: flex;
   align-items: center;
   gap: 12px;
-  color: #c56b3d;
+  color: var(--orange);
   margin-bottom: 20px;
 }
 
@@ -447,7 +475,7 @@ a {
 .orange-heading-line::after {
   content: "";
   height: 1px;
-  background-color: #c56b3d;
+  background-color: var(--orange);
 }
 
 .orange-heading-line::before {
@@ -465,12 +493,13 @@ a {
 /* Project title */
 
 .project-info h1 {
-  color: #23364d;
+  color: var(--navy);
   font-size: 3rem;
   margin: 0 0 18px;
+  font-family: "IM Fell English SC", serif;
 }
 
-/* Description */
+/* Project description */
 
 .project-description {
   color: #526579;
@@ -484,7 +513,7 @@ a {
 .project-difficulty {
   display: inline-block;
   background-color: #f5e5d5;
-  color: #23364d;
+  color: var(--navy);
   padding: 9px 20px;
   border-radius: 30px;
   font-weight: 700;
@@ -496,7 +525,7 @@ a {
 .project-divider {
   border: none;
   height: 1px;
-  background-color: #c56b3d;
+  background-color: var(--orange);
   margin: 24px 0;
 }
 
@@ -510,6 +539,8 @@ a {
   gap: 16px;
 }
 
+/* Summary item */
+
 .summary-item {
   display: flex;
   align-items: flex-start;
@@ -517,16 +548,22 @@ a {
   min-width: 0;
 }
 
+/* Summary item divider */
+
 .summary-item + .summary-item {
   border-left: 1px solid #e4b99e;
   padding-left: 16px;
 }
 
+/* Summary icon */
+
 .summary-icon {
-  color: #c56b3d;
+  color: var(--orange);
   font-size: 24px;
   flex-shrink: 0;
 }
+
+/* Summary heading */
 
 .summary-item h3 {
   color: #526579;
@@ -535,8 +572,10 @@ a {
   margin: 0 0 8px;
 }
 
+/* Summary text */
+
 .summary-item p {
-  color: #23364d;
+  color: var(--navy);
   font-size: 0.9rem;
   line-height: 1.6;
   margin: 0;
@@ -565,24 +604,32 @@ a {
   margin-bottom: 25px;
 }
 
+/* Orange line after heading */
+
 .section-heading::after {
   content: "";
   flex: 1;
   height: 2px;
-  background-color: #c56b3d;
+  background-color: var(--orange);
 }
 
+/* Section heading text */
+
 .section-heading h2 {
-  color: #23364d;
+  color: var(--navy);
   font-size: 1.7rem;
   margin: 0;
 }
 
-/* Instructions */
+/* =================================
+   INSTRUCTIONS
+================================= */
 
 .project-instructions {
   min-width: 0;
 }
+
+/* Instruction content */
 
 .instruction-content {
   color: #526579;
@@ -591,7 +638,33 @@ a {
   white-space: pre-line;
 }
 
-/* Materials card */
+/* Instruction list */
+
+.instruction-list {
+  padding-left: 30px;
+  margin-top: 20px;
+}
+
+/* Individual instruction */
+
+.instruction-list li {
+  font-size: 1.2rem;
+  line-height: 1.8;
+  color: var(--navy);
+  margin-bottom: 16px;
+  padding-left: 8px;
+}
+
+/* Orange instruction numbers */
+
+.instruction-list li::marker {
+  color: var(--orange);
+  font-weight: bold;
+}
+
+/* =================================
+   MATERIALS CARD
+================================= */
 
 .materials-card {
   background-color: #f8f4f0;
@@ -599,11 +672,15 @@ a {
   border-radius: 12px;
 }
 
+/* Materials heading */
+
 .materials-card h3 {
-  color: #23364d;
+  color: var(--navy);
   font-size: 1.15rem;
   margin: 20px 0 12px;
 }
+
+/* Materials text */
 
 .materials-card p {
   color: #526579;
@@ -611,22 +688,45 @@ a {
 }
 
 /* =================================
+   REDIRECT LINKS
+================================= */
+
+.redirect-link {
+  color: var(--navy);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.redirect-link:hover {
+  color: var(--orange);
+  text-decoration: underline;
+}
+
+/* =================================
    RESPONSIVE DESIGN
 ================================= */
 
 @media (max-width: 900px) {
+  /* Project hero */
+
   .project-hero {
     grid-template-columns: 1fr;
     gap: 25px;
   }
 
+  /* Project image */
+
   .project-image-container {
     height: 450px;
   }
 
+  /* Project title */
+
   .project-info h1 {
     font-size: 2.5rem;
   }
+
+  /* Instructions and materials */
 
   .project-lower {
     grid-template-columns: 1fr;
@@ -634,23 +734,101 @@ a {
   }
 }
 
+/* =================================
+   MOBILE DESIGN
+================================= */
+
 @media (max-width: 600px) {
+  /* Top navigation */
+
+  .top-bar {
+    gap: 10px;
+    padding: 14px 4%;
+  }
+
+  /* Logo */
+
+  .logo {
+    font-size: 3rem;
+  }
+
+  .logo-icon {
+    width: 50px;
+    height: 50px;
+  }
+  .title-logo {
+    font-family: "IM Fell English SC", serif;
+  }
+  /* Account link */
+
+  .account-link {
+    gap: 5px;
+    padding: 8px;
+    font-size: 0.85rem;
+  }
+
+  /* Main content */
+
+  .main-content {
+    width: 92%;
+    padding-top: 25px;
+  }
+
+  /* Main content when sidebar opens */
+
+  .app.menu-open .main-content {
+    width: calc(95% - var(--sidebar-width));
+    margin-left: calc(var(--sidebar-width) + 2.5%);
+    margin-right: 2.5%;
+  }
+
+  /* Welcome section */
+
+  .welcome {
+    padding: 32px 22px;
+    margin-bottom: 32px;
+  }
+
+  .app.menu-open .welcome {
+    padding: 24px 16px;
+  }
+
+  .welcome h1 {
+    font-size: 2.1rem;
+  }
+
+  /* Project section */
+
+  .projects-section h2 {
+    font-size: 1.65rem;
+  }
+
+  /* Project details */
+
   .project-details {
     padding: 20px 16px 40px;
   }
+
+  /* Project image */
 
   .project-image-container {
     height: 300px;
   }
 
+  /* Project title */
+
   .project-info h1 {
     font-size: 2rem;
   }
+
+  /* Project summary */
 
   .project-summary {
     grid-template-columns: 1fr;
     gap: 20px;
   }
+
+  /* Summary item dividers */
 
   .summary-item + .summary-item {
     border-left: none;
@@ -658,6 +836,8 @@ a {
     padding-left: 0;
     padding-top: 16px;
   }
+
+  /* Materials card */
 
   .materials-card {
     padding: 20px;

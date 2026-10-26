@@ -28,7 +28,7 @@ app.get("/", (req, res) => {
 });
 app.get("/api/projects", async (req, res) => {
   const difficulty = req.query.difficulty;
-  const category = req.query.catgeory;
+  const category = req.query.category;
   const projects = await getProjects(difficulty, category);
   res.send(projects);
 });

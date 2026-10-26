@@ -68,14 +68,14 @@ export default function ProjectDetails() {
               <span className="summary-icon">▤</span>
               <div>
                 <h3>Materials</h3>
-                <p>See project instructions</p>
+                <p>{project.materials?.length || 0} materials</p>
               </div>
             </div>
             <div className="summary-item">
               <span className="summary-icon">⚒</span>
               <div>
                 <h3>Tools</h3>
-                <p>See project instructions</p>
+                <p>{project.tools?.length || 0} tools</p>
               </div>
             </div>
           </div>
@@ -89,7 +89,11 @@ export default function ProjectDetails() {
           <div className="section-heading">
             <h2>Instructions</h2>
           </div>
-          <div className="instruction-content">{project.instructions}</div>
+          <ol className="instruction-list">
+            {project.instructions?.split(". ").map((step, index) => (
+              <li key={index}>{step}</li>
+            ))}
+          </ol>
         </div>
         {/* Materials and tools */}
         <aside className="materials-card">
@@ -97,10 +101,29 @@ export default function ProjectDetails() {
             <h2>Materials & Tools</h2>
           </div>
           <h3>Materials</h3>
-          <p>Materials will be listed with the project instructions.</p>
+          <ul>
+            {(project.materials || []).map((material) => (
+              <li key={material.id}>
+                {material.name}
+                {material.quantity && ` — ${material.quantity}`}
+              </li>
+            ))}
+          </ul>
+
+          {(!project.materials || project.materials.length === 0) && (
+            <p>No materials listed yet.</p>
+          )}
           <hr className="project-divider" />
           <h3>Tools</h3>
-          <p>Check the project instructions for the tools you'll need.</p>
+          <ul>
+            {(project.tools || []).map((tool) => (
+              <li key={tool.id}>{tool.name}</li>
+            ))}
+          </ul>
+
+          {(!project.tools || project.tools.length === 0) && (
+            <p>No tools listed yet.</p>
+          )}
         </aside>
       </section>
     </main>

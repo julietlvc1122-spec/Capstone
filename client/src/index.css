@@ -8,10 +8,9 @@
 
 h1,
 h2,
-h3,
-.logo {
-  font-family: "Lora", Georgia, serif;
-  font-weight: 500;
+h3 {
+  font-family: "IM Fell English SC", serif;
+  font-weight: 400;
 }
 
 button,
@@ -175,6 +174,9 @@ button {
   background-color: white;
   border-radius: 12px;
   overflow: hidden;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .project-card img {
@@ -188,4 +190,8 @@ button {
 .project-card p {
   padding-left: 16px;
   padding-right: 16px;
+}
+.project-card:hover {
+  transform: translateY(-5px);
+  color: #c56b3d;
 }

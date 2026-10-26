@@ -26,6 +26,15 @@ export default function Login() {
 
   return (
     <div className="login-page">
+      <header className="login-header">
+        <Link to="/" className="login-logo">
+          Stumped
+        </Link>
+
+        <Link to="/" className="home-link">
+          Home
+        </Link>
+      </header>
       <main className="login-content">
         <h1>Log into your account</h1>
         <p>Jump back into the fun!</p>
