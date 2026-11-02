@@ -3,7 +3,6 @@ import { Link, useParams } from "react-router";
 
 export default function ProjectDetails() {
   const { id } = useParams();
-
   const [project, setProject] = useState(null);
 
   useEffect(() => {
@@ -12,9 +11,7 @@ export default function ProjectDetails() {
         const response = await fetch(
           `${import.meta.env.VITE_API}/projects/${id}`,
         );
-
         const data = await response.json();
-
         setProject(data);
       } catch (error) {
         console.error("Error fetching project:", error);
@@ -38,7 +35,7 @@ export default function ProjectDetails() {
       {/* Photo and project information */}
       <section className="project-hero">
         {/* Left side: Project photo */}
-        <div className="project-image-container">
+        <div className="project-details-image-container">
           {project.image_url && (
             <img src={project.image_url} alt={project.title} />
           )}

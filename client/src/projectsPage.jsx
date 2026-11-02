@@ -27,12 +27,14 @@ export default function ProjectsPage() {
   }, [category]);
 
   return (
-    <main className="projects-page">
-      <Link to="/">← Home</Link>
+    <main className="main-content projects-page">
+      <Link className="home-link" to="/">
+        ← Home
+      </Link>
 
       <h1>{category || "All Projects"}</h1>
 
-      <div className="project-feed">
+      <div className="category-project-feed">
         {projects.map((project) => (
           <Link
             to={`/projects/${project.id}`}
@@ -40,14 +42,11 @@ export default function ProjectsPage() {
             key={project.id}
           >
             {project.image_url && (
-              <img src={project.image_url} alt={project.title} />
+              <div className="category-project-image">
+                <img src={project.image_url} alt={project.title} />
+              </div>
             )}
-
             <h3>{project.title}</h3>
-
-            <p>{project.description}</p>
-
-            <p>Difficulty: {project.difficulty}</p>
           </Link>
         ))}
       </div>

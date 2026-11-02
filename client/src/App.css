@@ -55,9 +55,9 @@ a {
 .top-bar {
   position: sticky;
   top: 0;
-
   z-index: 1000;
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
   align-items: center;
   justify-content: space-between;
   gap: 20px;
@@ -98,6 +98,8 @@ a {
   background: transparent;
   color: var(--white);
   font-size: 1.8rem;
+  justify-content: flex-start;
+  width: fit-content;
 }
 
 .icon-button:hover {
@@ -227,12 +229,21 @@ a {
 ================================= */
 
 .welcome-message {
-  color: var(--orange);
-  font-size: 1rem;
+  color: var(--white);
+  font-size: 1.5rem;
   font-weight: 600;
   margin: 0;
+  font-family: "IM Fell English SC", serif;
 }
-
+.user-account-link {
+  display: flex;
+  gap: 20px;
+  justify-content: flex-end;
+  align-items: center;
+}
+.welcome-message:hover {
+  color: var(--orange);
+}
 /* =================================
    LOGOUT BUTTON
 ================================= */
@@ -362,24 +373,9 @@ a {
 }
 
 /* Project feed */
-
-.project-feed {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.liked-projects {
+  margin-top: 40px;
   width: 100%;
-  min-width: 0;
-  min-height: 180px;
-  padding: 30px;
-  border: 2px dashed var(--tan);
-  border-radius: 14px;
-  background: var(--white);
-}
-
-/* Project feed when sidebar opens */
-
-.app.menu-open .project-feed {
-  padding: 20px;
 }
 
 /* Empty project message */
@@ -414,7 +410,9 @@ a {
 .back-link:hover {
   color: var(--navy);
 }
-
+.home-link:hover {
+  color: var(--orange);
+}
 /* =================================
    PROJECT HERO
    Photo left, information right
@@ -431,7 +429,7 @@ a {
    PROJECT IMAGE
 ================================= */
 
-.project-image-container {
+.project-details-image-container {
   width: 100%;
   height: 550px;
   background-color: #f7f7f7;
@@ -444,12 +442,14 @@ a {
 
 /* Project photo */
 
-.project-image-container img {
-  width: 100%;
-  height: 100%;
+.project-details-image-container img {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
   object-fit: contain;
   object-position: center;
-  display: block;
 }
 
 /* =================================
@@ -716,7 +716,7 @@ a {
 
   /* Project image */
 
-  .project-image-container {
+  .project-details-image-container {
     height: 450px;
   }
 
@@ -789,10 +789,6 @@ a {
     margin-bottom: 32px;
   }
 
-  .app.menu-open .welcome {
-    padding: 24px 16px;
-  }
-
   .welcome h1 {
     font-size: 2.1rem;
   }
@@ -812,9 +808,12 @@ a {
   /* Project image */
 
   .project-image-container {
-    height: 300px;
+    height: 220px;
   }
-
+  /* Project details image on mobile */
+  .project-details-image-container {
+    height: 350px;
+  }
   /* Project title */
 
   .project-info h1 {
@@ -842,4 +841,130 @@ a {
   .materials-card {
     padding: 20px;
   }
+}
+/* Account page styling */
+.profile-info {
+  margin-top: 24px;
+  padding: 24px;
+  background: #ffffff;
+  border: 1px solid #e8e8e8;
+  border-left: 4px solid #c56b3d;
+  border-radius: 8px;
+  max-width: 500px;
+}
+
+.profile-info p {
+  color: #23364d;
+  margin: 10px 0;
+}
+.liked-projects {
+  margin-top: 40px;
+  width: 100%;
+}
+
+.liked-projects h2 {
+  color: #23364d;
+  margin-bottom: 20px;
+  /* =================================
+   HOMEPAGE PROJECT CARD IMAGES
+================================= */
+}
+.project-image-container {
+  position: relative;
+  width: 100%;
+  height: 220px;
+  overflow: hidden;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+}
+.project-image-container img {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+.favorite-button {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid #e8e8e8;
+  border-radius: 50%;
+  background: white;
+  color: #23364d;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.favorite-button:hover {
+  color: #c56b3d;
+  border-color: #c56b3d;
+}
+
+/* Account page layout */
+.account-page {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 32px 40px;
+  box-sizing: border-box;
+}
+
+.account-page > h1 {
+  margin-top: 0;
+  margin-bottom: 16px;
+}
+
+.profile-info {
+  width: 100%;
+  max-width: none;
+  box-sizing: border-box;
+  padding: 28px;
+  border: 1px solid #e5e5e5;
+  border-left: 4px solid #c56b3d;
+  border-radius: 10px;
+}
+
+/* Liked projects */
+.liked-projects {
+  width: 100%;
+  margin-top: 36px;
+}
+/* CATEGORY PAGE PROJECT IMAGES */
+
+.category-project-image {
+  width: 100%;
+  height: 320px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  background: white;
+  border-radius: 8px;
+}
+
+.category-project-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.category-project-feed {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  justify-content: center;
+  gap: 24px;
+  width: 100%;
+}
+.category-project-feed .project-card {
+  width: 100%;
 }

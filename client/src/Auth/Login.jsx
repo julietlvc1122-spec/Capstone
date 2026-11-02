@@ -30,10 +30,6 @@ export default function Login() {
         <Link to="/" className="login-logo">
           Stumped
         </Link>
-
-        <Link to="/" className="home-link">
-          Home
-        </Link>
       </header>
       <main className="login-content">
         <h1>Log into your account</h1>

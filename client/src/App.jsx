@@ -1,4 +1,4 @@
-import { Routes, Route, Link, useLocation } from "react-router";
+import { Routes, Route, Link, useLocation, useNavigate } from "react-router";
 import Register from "./Auth/Register.jsx";
 import Login from "./Auth/login.jsx";
 import "./App.css";
@@ -10,26 +10,30 @@ import {
   Utensils,
   Sprout,
   Armchair,
-  Gamepad2,
-  PawPrint,
   Gift,
   LogOut,
+  Heart,
 } from "lucide-react";
 import ProjectsPage from "./projectsPage.jsx";
 import { useAuth } from "./Auth/AuthContext.jsx";
+import Account from "./AccountPage.jsx";
 
 export default function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [projects, setProjects] = useState([]);
   const location = useLocation();
-  const { user, logout } = useAuth();
+  const { user, logout, token } = useAuth();
+  const [favoriteIds, setFavoriteIds] = useState([]);
+  const navigate = useNavigate();
 
   const isAuthPage =
     location.pathname === "/login" || location.pathname === "/register";
+  // Fetch all projects
   useEffect(() => {
     async function fetchProjects() {
       try {
         const response = await fetch(`${import.meta.env.VITE_API}/projects`);
+
         const data = await response.json();
         setProjects(data);
       } catch (error) {
@@ -40,6 +44,84 @@ export default function App() {
     fetchProjects();
   }, []);
 
+  // Fetch the logged-in user's favorites
+  useEffect(() => {
+    async function fetchFavorites() {
+      try {
+        const response = await fetch(`${import.meta.env.VITE_API}/favorites`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          console.error("Fetching favorites failed:", {
+            status: response.status,
+            error: errorData,
+          });
+          return;
+        }
+
+        const data = await response.json();
+        setFavoriteIds(data.map((project) => Number(project.id)));
+      } catch (error) {
+        console.error("Error fetching favorites:", error);
+      }
+    }
+
+    if (token) {
+      fetchFavorites();
+    } else {
+      setFavoriteIds([]);
+    }
+  }, [token]);
+  async function toggleFavorite(projectId) {
+    if (!token) {
+      alert("Please log in to like projects.");
+      return;
+    }
+
+    const isFavorite = favoriteIds.includes(Number(projectId));
+
+    try {
+      const response = await fetch(
+        isFavorite
+          ? `${import.meta.env.VITE_API}/favorites/${projectId}`
+          : `${import.meta.env.VITE_API}/favorites`,
+        {
+          method: isFavorite ? "DELETE" : "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          ...(isFavorite
+            ? {}
+            : { body: JSON.stringify({ projectId: Number(projectId) }) }),
+        },
+      );
+
+      if (!response.ok) {
+        const errorData = await response.json();
+
+        console.error("Favorite request failed:", {
+          status: response.status,
+          error: errorData,
+        });
+
+        throw new Error("Unable to update favorite");
+      }
+
+      setFavoriteIds((currentIds) =>
+        isFavorite
+          ? currentIds.filter((id) => id !== Number(projectId))
+          : [...currentIds, Number(projectId)],
+      );
+    } catch (error) {
+      console.error("Error updating favorite:", error);
+      alert("Sorry, we couldn't update that favorite. Please try again.");
+    }
+  }
   return (
     <div className={`app ${menuOpen ? "menu-open" : ""}`}>
       <header className="top-bar">
@@ -59,19 +141,21 @@ export default function App() {
           />
           <span className="title-logo">Stumped</span>
         </Link>
-        <Link className="hello-user-link" to="/account">
-          {user && <p className="welcome-message">Hello, {user.username}!</p>}
-        </Link>
-        {isAuthPage ? (
-          <Link className="account-link" to="/">
-            <House size={20} strokeWidth={1.8} />
-            Home
+        <div className="user-account-link">
+          <Link className="hello-user-link" to="/account">
+            {user && <p className="welcome-message">Hello, {user.username}!</p>}
           </Link>
-        ) : (
-          <Link className="account-link" to="/register">
-            ♙ Account
-          </Link>
-        )}
+          {isAuthPage ? (
+            <Link className="account-link" to="/">
+              <House size={20} strokeWidth={1.8} />
+              Home
+            </Link>
+          ) : (
+            <Link className="account-link" to="/register">
+              ♙ Account
+            </Link>
+          )}
+        </div>
       </header>
 
       {menuOpen && (
@@ -119,7 +203,14 @@ export default function App() {
             Storage &amp; Organization
           </Link>
           {user && (
-            <button className="logout-button" onClick={logout}>
+            <button
+              className="logout-button"
+              onClick={() => {
+                logout();
+                setMenuOpen(false);
+                navigate("/");
+              }}
+            >
               <LogOut size={20} strokeWidth={1.8} />
               Logout
             </button>
@@ -153,7 +244,39 @@ export default function App() {
                     key={project.id}
                   >
                     {project.image_url && (
-                      <img src={project.image_url} alt={project.title} />
+                      <div className="project-image-container">
+                        <img src={project.image_url} alt={project.title} />
+                        {user && (
+                          <button
+                            className={`favorite-button ${
+                              favoriteIds.includes(project.id)
+                                ? "is-favorite"
+                                : ""
+                            }`}
+                            aria-label={
+                              favoriteIds.includes(project.id)
+                                ? `Unlike ${project.title}`
+                                : `Like ${project.title}`
+                            }
+                            aria-pressed={favoriteIds.includes(project.id)}
+                            onClick={(event) => {
+                              event.preventDefault();
+                              event.stopPropagation();
+                              toggleFavorite(project.id);
+                            }}
+                          >
+                            <Heart
+                              size={22}
+                              strokeWidth={1.8}
+                              fill={
+                                favoriteIds.includes(Number(project.id))
+                                  ? "currentColor"
+                                  : "none"
+                              }
+                            />
+                          </button>
+                        )}
+                      </div>
                     )}
 
                     <h3>{project.title}</h3>
@@ -170,6 +293,7 @@ export default function App() {
         <Route path="/projects/:id" element={<ProjectDetails />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/account" element={<Account />} />
       </Routes>
     </div>
   );
