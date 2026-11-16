@@ -1,6 +1,6 @@
 import { Routes, Route, Link, useLocation, useNavigate } from "react-router";
 import Register from "./Auth/Register.jsx";
-import Login from "./Auth/login.jsx";
+import Login from "./Auth/Login.jsx";
 import "./App.css";
 import { useState, useEffect } from "react";
 import ProjectDetails from "./projectDetails.jsx";
@@ -16,7 +16,7 @@ import {
 } from "lucide-react";
 import ProjectsPage from "./projectsPage.jsx";
 import { useAuth } from "./Auth/AuthContext.jsx";
-import Account from "./AccountPage.jsx";
+import Account from "./Auth/AccountPage.jsx";
 
 export default function App() {
   const [menuOpen, setMenuOpen] = useState(false);
