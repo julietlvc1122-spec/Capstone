@@ -16,7 +16,7 @@ import {
 } from "lucide-react";
 import ProjectsPage from "./projectsPage.jsx";
 import { useAuth } from "./Auth/AuthContext.jsx";
-import Account from "./Auth/AccountPage.jsx";
+import Account from "./Auth/Accountpage.jsx";
 
 export default function App() {
   const [menuOpen, setMenuOpen] = useState(false);
