@@ -15,9 +15,14 @@ import { requireAuth } from "./Authenticate.js";
 
 const app = express();
 
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://julietlvc1122-spec.github.io",
+];
+
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: allowedOrigins,
   }),
 );
 
