@@ -32,8 +32,9 @@ export default function App() {
   useEffect(() => {
     async function fetchProjects() {
       try {
+        console.log("API URL:", `${import.meta.env.VITE_API}/projects`);
         const response = await fetch(`${import.meta.env.VITE_API}/projects`);
-
+        console.log("Response status:", response.status);
         const data = await response.json();
         setProjects(data);
       } catch (error) {
