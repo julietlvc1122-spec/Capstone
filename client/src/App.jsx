@@ -136,7 +136,7 @@ export default function App() {
 
         <Link className="logo" to="/">
           <img
-            src="/Stumped-Logo.png"
+            src={`${import.meta.env.BASE_URL}Stumped-Logo.png`}
             alt="Stumped tree stump"
             className="logo-icon"
           />
