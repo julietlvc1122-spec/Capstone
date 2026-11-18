@@ -36,7 +36,7 @@ CREATE TABLE favorites (
 );
 CREATE TABLE tools(
     id SERIAL PRIMARY KEY,
-    name TEXT NOT NULL UNIQUE,
+    name TEXT NOT NULL UNIQUE
 )
 CREATE TABLE project_tools(
     project_id INTEGER REFERENCES projects(id),
