@@ -24,6 +24,16 @@ export function AuthProvider({ children }) {
       throw Error(result.message || "Something went wrong");
     }
     setToken(result.token);
+    const registeredUser = {
+      id: result.id,
+      username: result.username,
+      email: result.email,
+    };
+    setToken(result.token);
+    setUser(registeredUser);
+
+    localStorage.setItem("token", result.token);
+    localStorage.setItem("user", JSON.stringify(registeredUser));
   };
 
   const login = async (credentials) => {

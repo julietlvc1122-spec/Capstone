@@ -58,7 +58,17 @@ app.post("/api/users/register", async (req, res) => {
   }
   try {
     const user = await createUser(username, email, password);
-    res.status(201).json(user);
+    const token = jwt.sign(
+      { id: user.id, username: user.username },
+      process.env.JWT_SECRET,
+      { expiresIn: "1h" },
+    );
+    return res.status(201).json({
+      id: user.id,
+      username: user.username,
+      email: user.email,
+      token,
+    });
   } catch (error) {
     if (error.code === "23505") {
       return res.status(409).json({
