@@ -146,11 +146,16 @@ export default function App() {
           <Link className="hello-user-link" to="/account">
             {user && <p className="welcome-message">Hello, {user.username}!</p>}
           </Link>
-          {isAuthPage ? (
-            <Link className="account-link" to="/">
-              <House size={20} strokeWidth={1.8} />
-              Home
-            </Link>
+          {user ? (
+            <button
+              className="account-link"
+              onClick={() => {
+                logout();
+                navigate("/");
+              }}
+            >
+              Log Out
+            </button>
           ) : (
             <Link className="account-link" to="/register">
               ♙ Account
@@ -218,7 +223,7 @@ export default function App() {
           )}
         </aside>
       )}
-      <p>Current route: {location.pathname}</p>
+
       <Routes>
         <Route
           path="/"
