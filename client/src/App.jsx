@@ -218,7 +218,7 @@ export default function App() {
           )}
         </aside>
       )}
-
+      <p>Current route: {location.pathname}</p>
       <Routes>
         <Route
           path="/"
